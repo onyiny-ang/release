@@ -69,9 +69,9 @@ func CreateDocument(notes []*ReleaseNote) (*Document, error) {
 					isBug = true
 				case "feature":
 					continue
-				case "api-change", "new-api":
-					categorized = true
-					doc.APIChanges = append(doc.APIChanges, note.Markdown)
+					//				case "api-change", "new-api":
+					//					categorized = true
+					//					doc.APIChanges = append(doc.APIChanges, note.Markdown)
 				}
 			}
 
