@@ -22,6 +22,7 @@ type options struct {
 	output      string
 	startSHA    string
 	endSHA      string
+	themes      string
 	format      string
 }
 
@@ -59,6 +60,13 @@ func parseOptions(args []string) (*options, error) {
 			"The commit hash to end at",
 		)
 
+		// flTheme contains the themes identified as major themes for the release notes.
+		flThemes = flagset.String(
+			"themes",
+			env.String("THEMES", ""),
+			"The list of k/enhancements Issue numbers identified as major themes for the release",
+		)
+
 		// flFormat is the output format to produce the notes in.
 		flFormat = flagset.String(
 			"format",
@@ -92,6 +100,7 @@ func parseOptions(args []string) (*options, error) {
 		output:      *flOutput,
 		startSHA:    *flStartSHA,
 		endSHA:      *flEndSHA,
+		themes:      *flThemes,
 		format:      *flFormat,
 	}, nil
 }
@@ -107,6 +116,11 @@ func main() {
 	if err != nil {
 		level.Error(logger).Log("msg", "error parsing options", "err", err)
 		os.Exit(1)
+	}
+
+	// The themes are optional.
+	if opts.themes == "" {
+		level.Info(logger).Log("msg", "No Major Themes identified")
 	}
 
 	// Create the GitHub API client

@@ -9,13 +9,13 @@ import (
 
 // Document represents the underlying structure of a release notes document.
 type Document struct {
-	NewFeatures    []string            `json:"new_features"`
-	ActionRequired []string            `json:"action_required"`
-	APIChanges     []string            `json:"api_changes"`
-	Duplicates     map[string][]string `json:"duplicate_notes"`
-	SIGs           map[string][]string `json:"sigs"`
-	BugFixes       []string            `json:"bug_fixes"`
-	Uncategorized  []string            `json:"uncategorized"`
+	NewFeatures    []string `json:"new_features"`
+	ActionRequired []string `json:"action_required"`
+	//	APIChanges     []string            `json:"api_changes"`
+	Duplicates    map[string][]string `json:"duplicate_notes"`
+	SIGs          map[string][]string `json:"sigs"`
+	BugFixes      []string            `json:"bug_fixes"`
+	Uncategorized []string            `json:"uncategorized"`
 }
 
 // CreateDocument assembles an organized document from an unorganized set of
@@ -24,11 +24,11 @@ func CreateDocument(notes []*ReleaseNote) (*Document, error) {
 	doc := &Document{
 		NewFeatures:    []string{},
 		ActionRequired: []string{},
-		APIChanges:     []string{},
-		Duplicates:     map[string][]string{},
-		SIGs:           map[string][]string{},
-		BugFixes:       []string{},
-		Uncategorized:  []string{},
+		//		APIChanges:     []string{},
+		Duplicates:    map[string][]string{},
+		SIGs:          map[string][]string{},
+		BugFixes:      []string{},
+		Uncategorized: []string{},
 	}
 
 	for _, note := range notes {
@@ -142,13 +142,13 @@ func RenderMarkdown(doc *Document, w io.Writer) error {
 	}
 
 	// the "API Changes" section
-	if len(doc.APIChanges) > 0 {
-		write("## API Changes\n\n")
-		for _, note := range doc.APIChanges {
-			writeNote(note)
-		}
-		write("\n\n")
-	}
+	//	if len(doc.APIChanges) > 0 {
+	//		write("## API Changes\n\n")
+	//		for _, note := range doc.APIChanges {
+	//			writeNote(note)
+	//		}
+	//		write("\n\n")
+	//	}
 
 	// the "Duplicate Notes" section
 	if len(doc.Duplicates) > 0 {
